@@ -107,7 +107,7 @@
     " Restore cursor to file position in previous editing session
     " To disable this, add the following to your .vimrc.before.local file:
     "   let g:spf13_no_restore_cursor = 1
-    if !exists('g:spf13_no_restore_cursor')
+    " if !exists('g:spf13_no_restore_cursor')
         function! ResCur()
             if line("'\"") <= line("$")
                 normal! g`"
@@ -119,7 +119,7 @@
             autocmd!
             autocmd BufWinEnter * call ResCur()
         augroup END
-    endif
+    " endif
 
     " Setting up the directories {
         set backup                  " Backups are nice ...
@@ -131,20 +131,21 @@
 
         " To disable views add the following to your .vimrc.before.local file:
         "   let g:spf13_no_views = 1
-        if !exists('g:spf13_no_views')
+        " if !exists('g:spf13_no_views')
             " Add exclusions to mkview and loadview
             " eg: *.*, svn-commit.tmp
             let g:skipview_files = [
                 \ '\[example pattern\]'
                 \ ]
-        endif
+        " endif
     " }
 
 " }
 
 " Vim UI {
 
-    if !exists('g:override_spf13_bundles') && filereadable(expand("~/.vim/bundle/vim-colors-solarized/colors/solarized.vim"))
+    " if !exists('g:override_spf13_bundles') && filereadable(expand("~/.vim/bundle/vim-colors-solarized/colors/solarized.vim"))
+    if filereadable(expand("~/.vim/bundle/vim-colors-solarized/colors/solarized.vim"))
         let g:solarized_termcolors=256
         let g:solarized_termtrans=1
         let g:solarized_contrast="normal"
@@ -174,9 +175,9 @@
         " Broken down into easily includeable segments
         set statusline=%<%f\                     " Filename
         set statusline+=%w%h%m%r                 " Options
-        if !exists('g:override_spf13_bundles')
+        " if !exists('g:override_spf13_bundles')
             set statusline+=%{fugitive#statusline()} " Git Hotness
-        endif
+        " endif
         set statusline+=\ [%{&ff}/%Y]            " Filetype
         set statusline+=\ [%{getcwd()}]          " Current dir
         set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
@@ -220,7 +221,8 @@
     " To disable the stripping of whitespace, add the following to your
     " .vimrc.before.local file:
     "   let g:spf13_keep_trailing_whitespace = 1
-    autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql autocmd BufWritePre <buffer> if !exists('g:spf13_keep_trailing_whitespace') | call StripTrailingWhitespace() | endif
+    " autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql autocmd BufWritePre <buffer> if !exists('g:spf13_keep_trailing_whitespace') | call StripTrailingWhitespace() | endif
+    autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql autocmd BufWritePre <buffer> call StripTrailingWhitespace()
     "autocmd FileType go autocmd BufWritePre <buffer> Fmt
     autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
     autocmd FileType haskell,puppet,ruby,yml setlocal expandtab shiftwidth=2 softtabstop=2
@@ -436,11 +438,11 @@ cmap w!! w !sudo tee % >/dev/null
         " your .vimrc.before.local file:
         "   let g:spf13_consolidated_directory = <full path to desired directory>
         "   eg: let g:spf13_consolidated_directory = $HOME . '/.vim/'
-        if exists('g:spf13_consolidated_directory')
-            let common_dir = g:spf13_consolidated_directory . prefix
-        else
+        " if exists('g:spf13_consolidated_directory')
+        "     let common_dir = g:spf13_consolidated_directory . prefix
+        " else
             let common_dir = parent . '/.' . prefix
-        endif
+        " endif
 
         for [dirname, settingname] in items(dir_list)
             let directory = common_dir . dirname . '/'
